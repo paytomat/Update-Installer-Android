@@ -14,6 +14,7 @@ object UpdateInstaller {
      * Set lib configuration
      * @param config lib configuration
      */
+    @JvmStatic
     fun setConfig(config: Config) {
         this.config = config
     }
@@ -24,6 +25,7 @@ object UpdateInstaller {
      * @throws UninitializedPropertyAccessException if config was not initialized
      * @return if app will be installed from store
      */
+    @JvmStatic
     @Throws(UninitializedPropertyAccessException::class)
     fun canUseStoreUpdate(context: Context): Boolean = when (config.usePlayStrategy) {
         InstalledByPlayStoreStrategy -> {
@@ -41,6 +43,7 @@ object UpdateInstaller {
      * @param context required to check what installed app or if store is on device, and open store or start download
      * @throws UninitializedPropertyAccessException if config was not initialized
      */
+    @JvmStatic
     @Throws(UninitializedPropertyAccessException::class)
     fun update(context: Context, downloadInfo: DownloadInfo) {
         if (canUseStoreUpdate(context)) {
@@ -54,6 +57,7 @@ object UpdateInstaller {
      * Remove application download files
      * @param context required to get directory where files are stored
      */
+    @JvmStatic
     fun cleanup(context: Context) {
         ApkLoaderStrategy.cleanUp(context)
     }
