@@ -3,22 +3,22 @@ package com.deepdive.updateinstaller.model
 import java.lang.IllegalArgumentException
 
 class Config private constructor(
-        val appId: String,
-        val apkUrl: String,
-        val usePlayStrategy: InstallerStrategy,
-        val fileName: String,
-        val showDownloadMessages: Boolean
+    val appId: String,
+    val apkUrl: String,
+    val usePlayStrategy: InstallerStrategy,
+    val fileName: String,
+    val showDownloadMessages: Boolean
 ) {
 
     /**
      * Builder for library configuration
      * @param appId application id for update
      */
-    class Builder(val appId: String) {
-        var apkUrl: String = ""
-        var usePlayStrategy: InstallerStrategy = InstalledByPlayStoreStrategy
-        var fileName = "app.apk"
-        var showDownloadMessages: Boolean = true
+    class Builder(private val appId: String) {
+        private var apkUrl: String = ""
+        private var usePlayStrategy: InstallerStrategy = InstalledByPlayStoreStrategy
+        private var fileName = "app.apk"
+        private var showDownloadMessages: Boolean = true
 
         /**
          * @param apkUrl web url where apk is stored. Make sure it can be downloaded by this link
@@ -28,7 +28,8 @@ class Config private constructor(
         /**
          * @param strategy decides how to act for updates, sometimes(when apk-signature matches store signature update can be installed from store)
          */
-        fun setPlayStrategy(strategy: InstallerStrategy): Builder = this.apply { this.usePlayStrategy = strategy }
+        fun setPlayStrategy(strategy: InstallerStrategy): Builder =
+            this.apply { this.usePlayStrategy = strategy }
 
         /**
          * @param name file name for downloaded file
@@ -47,13 +48,13 @@ class Config private constructor(
         }
 
         fun build(): Config = Config(
-                appId = appId.takeIf { it.isNotBlank() }
-                        ?: throw IllegalArgumentException("AppId must be provided"),
-                apkUrl = apkUrl.takeIf { it.isNotBlank() }
-                        ?: throw IllegalArgumentException("AppUlr must be provided"),
-                usePlayStrategy = usePlayStrategy,
-                fileName = fileName.takeIf { it.isNotBlank() } ?: "$appId.apk",
-                showDownloadMessages = showDownloadMessages
+            appId = appId.takeIf { it.isNotBlank() }
+                ?: throw IllegalArgumentException("AppId must be provided"),
+            apkUrl = apkUrl.takeIf { it.isNotBlank() }
+                ?: throw IllegalArgumentException("AppUlr must be provided"),
+            usePlayStrategy = usePlayStrategy,
+            fileName = fileName.takeIf { it.isNotBlank() } ?: "$appId.apk",
+            showDownloadMessages = showDownloadMessages
         )
     }
 }
